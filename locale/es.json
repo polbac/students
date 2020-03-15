@@ -1,0 +1,40 @@
+{
+    "paymentMethodForm": {
+        "title": "Selecciona tu método de pago.",
+        "subtitle": "Dejanos tus datos para que podamos cobrarte la próxima vez.",
+        "success": "Gracias por dejar tus datos :)",
+        "form": {
+            "name": {
+                "label": "Nombre",
+                "error": "Debes completar este campo"
+            },
+            "email": {
+                "label": "Correo electrónico",
+                "error": "Debes completar este campo de manera válida"
+            },
+            "career": {
+                "label": "Carrera",
+                "error": "Debes completar este campo"
+            },
+            "birthdate": {
+                "label": "Fecha de Nacimiento",
+                "error": "Debes completar este campo"
+            },
+            "country": {
+                "label": "País",
+                "error": "Debes completar este campo"
+            },
+            "city": {
+                "label": "Ciudad",
+                "error": "Debes completar este campo"
+            },
+            "phone": {
+                "label": "Teléfono",
+                "error": "Debes completar este campo"
+            },
+            "button": {
+                "label": "Enviar"
+            }
+        }
+    }
+}

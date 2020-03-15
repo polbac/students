@@ -1,0 +1,16 @@
+{
+   "type": "mysql",
+   "host": "remotemysql.com",
+   "port": 3306,
+   "username": "5gF0BkYJyS",
+   "password": "BDuGZqjYSd",
+   "database": "5gF0BkYJyS",
+   "synchronize": true,
+   "logging": true,
+   "migrationsTableName": "migration",
+   "entities": ["database/entity//**/*.ts"],
+   "migrations": ["database/migration/*.ts"],
+   "cli": {
+       "migrationsDir": "database/migration"
+   }
+}
