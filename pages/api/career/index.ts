@@ -1,18 +1,24 @@
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
 import getConnection from '../../../connection'
+import { HttpMethod } from "../../../models/http"
 
 
-export default async (req, res) => {
-    try {        
-        const connection = getConnection()
-        const careers = await connection.manager.find('career');
+export default async (req: any, res: any) => {
+    const { method } = req
 
-        createResponse(res, {
-            careers,
-        })
-    } catch(err) {
-        console.log('API :: Career :: Error', err)
-        createErrorResponse(res)
+    if (method === HttpMethod.GET) {
+        try {        
+            const connection = getConnection()
+            const careers = await connection.manager.find('career');
+    
+            createResponse(res, {
+                careers,
+            })
+        } catch(err) {
+            console.log('API :: Career :: Error', err)
+            createErrorResponse(res)
+        }
     }
+    
   
 }

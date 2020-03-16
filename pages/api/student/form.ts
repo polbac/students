@@ -3,7 +3,7 @@ import getConnection from '../../../connection'
 import { PaymentMethodSchema } from '../../../schemas/paymentMethod'
 
 
-export default async (req, res) => {
+export default async (req: any, res: any) => {
     const student = req.body
 
     try {

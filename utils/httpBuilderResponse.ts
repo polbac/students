@@ -1,6 +1,6 @@
 import { HttpStatus } from "../models/http"
 
-export function createNotFoundResponse(res, text = 'Page Not Found') {
+export function createNotFoundResponse(res: any, text = 'Page Not Found') {
     res.status(HttpStatus.NOT_FOUND)
         .send({
             success: false,
@@ -8,7 +8,7 @@ export function createNotFoundResponse(res, text = 'Page Not Found') {
         })
 }
 
-export function createErrorResponse(res, text = 'Internal Server Error') {
+export function createErrorResponse(res: any, text = 'Internal Server Error') {
     res.status(HttpStatus.ERROR)
         .send({
             success: false,
@@ -16,7 +16,7 @@ export function createErrorResponse(res, text = 'Internal Server Error') {
         })
 }
 
-export function createResponse(res, body = {}) {
+export function createResponse(res: any, body = {}) {
     res.status(HttpStatus.OK)
         .send({
             success: true,

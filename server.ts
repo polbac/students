@@ -30,3 +30,5 @@ app.prepare().then(() => {
     console.log(`> Students ready on http://localhost:${port}`)
   })
 })
+
+export default undefined
