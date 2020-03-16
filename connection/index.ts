@@ -3,9 +3,15 @@ import { Country } from '../database/entity/Country'
 import { Career } from '../database/entity/Career'
 import { PaymentMethodOption } from '../database/entity/PaymentMethodOption'
 import { Student } from '../database/entity/Student'
+const path = require('path')
 import ("reflect-metadata")
 
-require('dotenv').config()
+const env = process.env.NODE_ENV || 'development'
+
+require('dotenv').config({
+    path: path.join(__dirname, `.env.${env}`),
+    systemvars: true
+  })
 
 export function makeConnection(): Promise<Connection> {
     return new Promise(async (resolve, reject) => {
