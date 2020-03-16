@@ -16,6 +16,10 @@ class MyApp extends App {
                 font-family: 'Rubik', helvetica, arial, sans-serif;
                 color: #2C3249;
             }
+            h1,h2,h3,h4{
+              margin: 0;
+              padding: 0;
+            }
           }`}</style>
       </React.Fragment>
     )

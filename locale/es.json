@@ -1,8 +1,11 @@
 {
     "paymentMethodForm": {
-        "title": "Selecciona tu método de pago.",
+        "title": "Tu Método de Pago.",
         "subtitle": "Dejanos tus datos para que podamos cobrarte la próxima vez.",
+        "personal": "Ingresa tus Datos Personales",
+        "payment": "Ingresa tu Método de Pago",
         "success": "Gracias por dejar tus datos :)",
+        "serverError": "Ups! ocurrió un error, intenta nuevamente",
         "form": {
             "name": {
                 "label": "Nombre",
@@ -14,6 +17,7 @@
             },
             "career": {
                 "label": "Carrera",
+                "placeholder": "Selecciona una carrera",
                 "error": "Debes completar este campo"
             },
             "birthdate": {
@@ -22,6 +26,7 @@
             },
             "country": {
                 "label": "País",
+                "placeholder": "Selecciona un país",
                 "error": "Debes completar este campo"
             },
             "city": {
@@ -30,6 +35,15 @@
             },
             "phone": {
                 "label": "Teléfono",
+                "error": "Debes completar este campo"
+            },
+            "paymentMethod": {
+                "label": "Método de Pago",
+                "placeholder": "Selecciona un método de pago",
+                "error": "Debes completar este campo"
+            },
+            "installments": {
+                "label": "Cuotas",
                 "error": "Debes completar este campo"
             },
             "button": {

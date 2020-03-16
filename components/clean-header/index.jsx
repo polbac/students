@@ -10,6 +10,12 @@ function CleanHeader() {
             .clean-header {
                 margin: 32px 70px 16px 48px;
             }
+
+            @media(max-width: 600px) {
+                margin: 0;
+                text-align: center;
+                padding-bottom: 20px;
+            }
         `}</style>
         </React.Fragment>
     )

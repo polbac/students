@@ -1,6 +1,8 @@
 import { createConnection, ConnectionOptions, Connection } from 'typeorm'
 import { Country } from '../database/entity/Country'
 import { Career } from '../database/entity/Career'
+import { PaymentMethodOption } from '../database/entity/PaymentMethodOption'
+import { Student } from '../database/entity/Student'
 import ("reflect-metadata")
 
 require('dotenv').config()
@@ -15,7 +17,7 @@ export function makeConnection(): Promise<Connection> {
                 username: process.env.DB_USERNAME,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_DATABASE,
-                entities: [ Country, Career ],
+                entities: [ Country, Career, Student, PaymentMethodOption ],
             } as ConnectionOptions)
             resolve()
         } catch(err) {

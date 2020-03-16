@@ -5,7 +5,7 @@ import CleanHeader from '../components/clean-header'
 import useLocale from '../hooks/locale'
 import apiClient from '../lib/client'
 
-export default function Home({ countries, careers }) {
+export default function Home({ countries, careers, paymentMethodOptions }) {
   const { paymentMethodForm } = useLocale()
 
   return (
@@ -20,8 +20,7 @@ export default function Home({ countries, careers }) {
       </h1>
       <hr/>
 
-      <PaymentMethodForm countries={countries} careers={careers} />
-
+      <PaymentMethodForm countries={countries} careers={careers} paymentMethodOptions={paymentMethodOptions} />
       
     </Container>
       
@@ -35,11 +34,15 @@ export async function getServerSideProps(context) {
 
   const careersRequest = await apiClient.get('career')
   const careers = await careersRequest.json()
+
+  const paymentMethodOptionsRequest = await apiClient.get('payment-method-option')
+  const paymentMethodOptions = await paymentMethodOptionsRequest.json()
   
   return {
     props: {
       countries: countries.body.countries,
       careers: careers.body.careers,
+      paymentMethodOptions: paymentMethodOptions.body.paymentMethodOptions,
     }
   }
 }

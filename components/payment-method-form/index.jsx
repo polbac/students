@@ -7,6 +7,9 @@ import {
     Field,
   } from 'formik'
 
+import useMedia from 'use-media'
+
+import Alert from '@material-ui/lab/Alert';
 import FormControl from '@material-ui/core/FormControl'
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem'
@@ -22,33 +25,35 @@ import FieldError from '../field-error'
 import Funny from '../funny'
 import React, { useState } from 'react'
 
+const PAYMENT_METHOD_CC_ID = 1
+
 function PaymentMethodForm(props) {
-  const { countries, careers } = props
-  const [ done, setDone] = useState(false)
+    let { countries, careers, paymentMethodOptions } = props
+
+    const [ done, setDone] = useState(false)
+    const [ serverError, setServerError] = useState(false)
 
     const initialValues = { 
       name: '', 
       email: '',
-      career: '',
-      birthdate: new Date(),
-      country: '',
-      city: '',
-      phone: '',
+      career: -1,
+      birth_date: new Date(),
+      country: -1,
+      city: "",
+      phone_number: '',
+      payment_method: -1,
+      installments: 1
     }
-    const { paymentMethodForm: { form } } = useLocale()
-    const { paymentMethodForm} = useLocale()
 
+    const installments = [1, 3, 6]
+    const { paymentMethodForm: { form } } = useLocale()
+    const { paymentMethodForm } = useLocale()
+    const isXs = useMedia({maxWidth: '600px'});
     const date = new Date()
     const l = form
 
-    if (done) {
-      
-      return (
-        <React.Fragment>
-          <h3>{paymentMethodForm.success}</h3>
-          <Funny />
-        </React.Fragment>
-      )
+    if (done) {      
+      return <SuccessMessage />
     }
 
     return (
@@ -59,18 +64,41 @@ function PaymentMethodForm(props) {
                 validationSchema={PaymentMethodSchema}
                 onSubmit={(values, actions) => {
                   actions.setSubmitting(true);
-                  apiClient.post('student', values)
-                    .then(b => console.log(b))
-                    .catch(err => console.log('err', err))
+                  setServerError(false)
+                  apiClient.post('student/form', values)
+                    .then(res => {
+                      if (!res.ok) {
+                        setServerError(true)
+                        actions.setSubmitting(false)
+                        return
+                      }
+                      setDone(true)
+                    })
+                    .catch(err => {
+                      setServerError(true)
+                      actions.setSubmitting(false)
+                    })
 
                 }}
                 render={formikBag => (
                   <Form>
                   <Grid container spacing={3}>
-                  <h3>
-                    {paymentMethodForm.subtitle}
-                  </h3>
-                    <Grid item xs={6}>
+                    
+                  <Grid item md={12}>
+                      <h3>
+                        {paymentMethodForm.subtitle}
+                      </h3>
+                  </Grid>
+                  
+                  {serverError && <Alert severity="error" fullWidth>{paymentMethodForm.serverError}</Alert>}
+
+                  <Grid item md={12}>
+                      <h4>
+                        {paymentMethodForm.personal}
+                      </h4>
+                  </Grid>
+                    
+                    <Grid item md={6} xs={12}>
                       <Field
                         name="name"
                         render={({ field, form, meta }) => (
@@ -86,7 +114,7 @@ function PaymentMethodForm(props) {
                       />
                     </Grid>
                     
-                    <Grid item xs={6}>
+                    <Grid item md={6} xs={12}>
                       <Field
                         name="email"
                         render={({ field, form, meta }) => (
@@ -103,7 +131,7 @@ function PaymentMethodForm(props) {
                       />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item md={12} xs={12}>
                     <Field
                       name="career"
                       render={({ field, form, meta }) => (
@@ -126,9 +154,9 @@ function PaymentMethodForm(props) {
                     />
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item md={6} xs={12}>
                       <Field
-                        name="birdate"
+                        name="bir_date"
                         render={({ field, form, meta }) => (
                           <FormControl fullWidth>
                           <KeyboardDatePicker
@@ -145,9 +173,9 @@ function PaymentMethodForm(props) {
                         )}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item md={6} xs={12}>
                       <Field
-                        name="phone"
+                        name="phone_number"
                         render={({ field, form, meta }) => (
                           <FormControl fullWidth>
                             <TextField value={field.value} label={l.phone.label} id={l.email.label} {...field} aria-describedby={l.email.label} />
@@ -156,7 +184,7 @@ function PaymentMethodForm(props) {
                         )}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item md={6} xs={12}>
                       <Field
                         name="country"
                         render={({ field, form, meta }) => (
@@ -178,7 +206,7 @@ function PaymentMethodForm(props) {
                         )}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item md={6} xs={12}>
                     <Field
                       name="city"
                       render={({ field, form, meta }) => (
@@ -189,11 +217,67 @@ function PaymentMethodForm(props) {
                       )}
                     />
                     </Grid>
+
+
+                    <Grid item md={12} xs={12}>
+                        <h4>
+                          {paymentMethodForm.payment}
+                        </h4>
+                    </Grid>
+
+                    <Grid item md={12} xs={12}>
+                      <Field
+                          name="payment_method"
+                          render={({ field, form, meta }) => (
+                            <FormControl fullWidth>
+                              <TextField
+                              label={l.paymentMethod.label}
+                              value={field.value}
+                              select
+                              {...field}
+                              >
+                              {paymentMethodOptions.map(option => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                              </TextField>
+                              <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                              </FormControl>
+                          )}
+                        />
+                    </Grid>
+                    {formikBag.values.payment_method === PAYMENT_METHOD_CC_ID && (
+                      <Grid item md={12} xs={12}>
+                        <Field
+                            name="installments"
+                            render={({ field, form, meta }) => (
+                              <FormControl fullWidth>
+                                <TextField
+                                label={l.installments.label}
+                                value={field.value}
+                                select
+                                {...field}
+                                >
+                                {installments.map(value => (
+                                  <MenuItem key={value} value={value}>
+                                    {value}
+                                  </MenuItem>
+                                ))}
+                                </TextField>
+                                <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                                </FormControl>
+                            )}
+                          />
+                      </Grid>
+                    )}
                     
-                    <Grid item>
-                      {!form.isSubmitting ? <Button variant="contained" color="primary" type="submit">Enviar</Button> :<CircularProgress />}  
+                    <Grid item xs={12} md={12}>
+                      {!formikBag.isSubmitting ? <Button size={'large'} fullWidth={isXs} variant="contained" color="primary" type="submit">Enviar</Button> :<CircularProgress />}  
                     </Grid>
+                    
                     </Grid>
+                    
                   </Form>
                 )}
               />
@@ -201,6 +285,21 @@ function PaymentMethodForm(props) {
           </MuiPickersUtilsProvider>
         </React.Fragment>
       );
+}
+
+function SuccessMessage() {
+  const { paymentMethodForm } = useLocale()
+  return (
+    <React.Fragment>
+    <h3 className='success-text'>{paymentMethodForm.success}</h3>
+    <Funny />
+    <style jsx>{`
+      .success-text{
+        margin-bottom: 50px;
+      }
+    `}</style>
+  </React.Fragment>
+  )
 }
 
 export default PaymentMethodForm
