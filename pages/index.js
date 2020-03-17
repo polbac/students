@@ -11,7 +11,7 @@ export default function Home({ countries, careers, paymentMethodOptions }) {
   return (
     <div className="container">
     <Head>
-      <title>Acámica</title>
+    <title>Acámica - {paymentMethodForm.title}</title>
     </Head>
     <CleanHeader />
     <Container maxWidth="sm">

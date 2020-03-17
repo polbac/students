@@ -3,7 +3,10 @@ import { Country } from '../database/entity/Country'
 import { Career } from '../database/entity/Career'
 import { PaymentMethodOption } from '../database/entity/PaymentMethodOption'
 import { Student } from '../database/entity/Student'
+import { User } from '../database/entity/User'
+
 const path = require('path')
+
 import ("reflect-metadata")
 
 const env = process.env.NODE_ENV || 'development'
@@ -23,7 +26,7 @@ export function makeConnection(): Promise<Connection> {
                 username: process.env.DB_USERNAME,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_DATABASE,
-                entities: [ Country, Career, Student, PaymentMethodOption ],
+                entities: [ Country, Career, Student, PaymentMethodOption, User ],
             } as ConnectionOptions)
             resolve()
         } catch(err) {

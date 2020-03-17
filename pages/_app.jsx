@@ -3,6 +3,7 @@ import App from 'next/app'
 import Head from 'next/head'
 
 class MyApp extends App {
+  
   render() {
     const { Component, pageProps } = this.props;
     return (
@@ -15,6 +16,8 @@ class MyApp extends App {
             html,body{
                 font-family: 'Rubik', helvetica, arial, sans-serif;
                 color: #2C3249;
+                margin: 0;
+                padding: 0;
             }
             h1,h2,h3,h4{
               margin: 0;

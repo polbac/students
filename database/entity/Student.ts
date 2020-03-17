@@ -1,5 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Career } from './Career';
+import {Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne} from "typeorm";
 import 'reflect-metadata'
+import { Country } from './Country';
 
 @Entity()
 export class Student {
@@ -13,7 +15,10 @@ export class Student {
     email: string
 
     @Column()
-    career: number
+    //@ts-ignore
+    @OneToOne(type => Career)
+    @JoinColumn({ name: 'career' })
+    career: Career
 
     @Column()
     birth_date: Date
@@ -22,7 +27,10 @@ export class Student {
     phone_number: string
 
     @Column()
-    country: number
+    //@ts-ignore
+    @OneToOne(type => Country)
+    @JoinColumn({ name: 'country' })
+    country: Country
 
     @Column()
     city: string

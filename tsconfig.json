@@ -30,6 +30,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "components/payment-method-form/index.js"
+    "components/payment-method-form/index.js", "pages/_app.jsx"
   ]
 }

@@ -6,8 +6,7 @@ export default async (req: Request, res: Response) => {
     const { method } = req
 
     if (method === HttpMethod.POST) {
-        const email = 'email'
-        const password = 'polbac123'
+        const { email, password } = req.body as any
         
         try {
             const valid = await auth(email, password)
@@ -20,7 +19,7 @@ export default async (req: Request, res: Response) => {
                 },
             })
         } catch(err) {
-            console.log('err', err)
+            createNotFoundResponse(res, 'userNotFound');
         }
     
     }

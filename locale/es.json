@@ -50,5 +50,40 @@
                 "label": "Enviar"
             }
         }
+    },
+    "dashboard": {
+        "title": "Acámica 🌐 Dashboard",
+        "list": {
+            "title": "Lista de Estudiantes"
+        }
+    },
+    "login": {
+        "title": "Ingresa tus datos",
+        "email": {
+            "label": "Correo electrónico",
+            "error": "Igresa un e-mail válido"
+        },
+        "password": {
+            "label": "Contraseña",
+            "error": "Debes completar este campo"
+        },
+        "login": {
+            "label": "Ingresar"
+        },
+        "serverError": "Ups! ocurrió un error, intenta nuevamente",
+        "authError": "No encontramos el usuario, intenta nuevamente"
+    },
+    "list": {
+        "title": "Lista de Estudiantes",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "career": "Carrera",
+        "country": "País",
+        "edit": "Editar"
+    },
+    "edit": {
+        "title": "Editar Estudiante",
+        "personal": "Datos Personales",
+        "payment": "Método de Pago"
     }
 }
