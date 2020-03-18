@@ -9,8 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Career_1 = require("./Career");
 var typeorm_1 = require("typeorm");
 require("reflect-metadata");
+var Country_1 = require("./Country");
 var Student = /** @class */ (function () {
     function Student() {
     }
@@ -27,8 +29,12 @@ var Student = /** @class */ (function () {
         __metadata("design:type", String)
     ], Student.prototype, "email", void 0);
     __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", Number)
+        typeorm_1.Column()
+        //@ts-ignore
+        ,
+        typeorm_1.OneToOne(function (type) { return Career_1.Career; }),
+        typeorm_1.JoinColumn({ name: 'career' }),
+        __metadata("design:type", Career_1.Career)
     ], Student.prototype, "career", void 0);
     __decorate([
         typeorm_1.Column(),
@@ -39,8 +45,12 @@ var Student = /** @class */ (function () {
         __metadata("design:type", String)
     ], Student.prototype, "phone_number", void 0);
     __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", Number)
+        typeorm_1.Column()
+        //@ts-ignore
+        ,
+        typeorm_1.OneToOne(function (type) { return Country_1.Country; }),
+        typeorm_1.JoinColumn({ name: 'country' }),
+        __metadata("design:type", Country_1.Country)
     ], Student.prototype, "country", void 0);
     __decorate([
         typeorm_1.Column(),

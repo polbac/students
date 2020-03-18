@@ -1,6 +1,7 @@
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
 import getConnection from '../../../connection'
 import { HttpMethod } from "../../../models/http"
+import { Student } from "../../../database/entity/Student"
 
 
 export default async (req: any, res: any) => {
@@ -14,7 +15,7 @@ export default async (req: any, res: any) => {
         try {
             const { body } = req
             const student = await repository.preload(body);
-            const saved = await repository.save(student)
+            const saved = await repository.save(student as Student)
 
             createResponse(res, {
                 saved,

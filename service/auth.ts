@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import { getConnection } from 'typeorm'
-import { rejects } from 'assert';
 
 var md5 = require('md5');
 

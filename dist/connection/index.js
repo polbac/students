@@ -48,8 +48,14 @@ var Country_1 = require("../database/entity/Country");
 var Career_1 = require("../database/entity/Career");
 var PaymentMethodOption_1 = require("../database/entity/PaymentMethodOption");
 var Student_1 = require("../database/entity/Student");
+var User_1 = require("../database/entity/User");
+var path = require('path');
 Promise.resolve().then(function () { return __importStar(require("reflect-metadata")); });
-require('dotenv').config();
+var env = process.env.NODE_ENV || 'development';
+require('dotenv').config({
+    path: path.join(__dirname, ".env." + env),
+    systemvars: true
+});
 function makeConnection() {
     var _this = this;
     return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
@@ -66,7 +72,7 @@ function makeConnection() {
                             username: process.env.DB_USERNAME,
                             password: process.env.DB_PASSWORD,
                             database: process.env.DB_DATABASE,
-                            entities: [Country_1.Country, Career_1.Career, Student_1.Student, PaymentMethodOption_1.PaymentMethodOption],
+                            entities: [Country_1.Country, Career_1.Career, Student_1.Student, PaymentMethodOption_1.PaymentMethodOption, User_1.User],
                         })];
                 case 1:
                     _a.connection = _b.sent();
