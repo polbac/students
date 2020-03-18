@@ -6,7 +6,9 @@ import {
   Field,
 } from 'formik'
 import useLocale from '../../hooks/locale'
-import { useState, useEffect } from 'react'
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { useEffect } from 'react'
+import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
@@ -63,7 +65,7 @@ function StudentEdit({ studentId }) {
   const l = form
   
   return (
-      <Container maxWidth="md" className='container'>
+      <Container maxWidth="md" className='edit-container'>
           <Grid md="12">
           <h2>{edit.title}</h2>
           </Grid>
@@ -87,7 +89,7 @@ function StudentEdit({ studentId }) {
                     </h4>
                 </Grid>
                   
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                     <Field
                       name="name"
                       render={({ field, form, meta }) => (
@@ -103,7 +105,7 @@ function StudentEdit({ studentId }) {
                     />
                   </Grid>
                   
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                     <Field
                       name="email"
                       render={({ field, form, meta }) => (
@@ -120,7 +122,7 @@ function StudentEdit({ studentId }) {
                     />
                   </Grid>
 
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                   <Field
                     name="career"
                     render={({ field, form, meta }) => (
@@ -143,7 +145,7 @@ function StudentEdit({ studentId }) {
                   />
                   </Grid>
 
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                     <Field
                       name="bir_date"
                       render={({ field, form, meta }) => (
@@ -162,7 +164,7 @@ function StudentEdit({ studentId }) {
                       )}
                     />
                   </Grid>
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                     <Field
                       name="phone_number"
                       render={({ field, form, meta }) => (
@@ -173,7 +175,7 @@ function StudentEdit({ studentId }) {
                       )}
                     />
                   </Grid>
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                     <Field
                       name="country"
                       render={({ field, form, meta }) => (
@@ -195,7 +197,7 @@ function StudentEdit({ studentId }) {
                       )}
                     />
                   </Grid>
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                   <Field
                     name="city"
                     render={({ field, form, meta }) => (
@@ -208,7 +210,7 @@ function StudentEdit({ studentId }) {
                   </Grid>
 
 
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12}>
                       <h4>
                         {edit.payment}
                       </h4>
@@ -237,7 +239,7 @@ function StudentEdit({ studentId }) {
                       />
                   </Grid>
                   {formikBag.values.payment_method === PAYMENT_METHOD_CC_ID && (
-                    <Grid item md={12}>
+                    <Grid item md={12} xs={12}>
                       <Field
                           name="installments"
                           render={({ field, form, meta }) => (
@@ -261,8 +263,20 @@ function StudentEdit({ studentId }) {
                     </Grid>
                   )}
                   
-                  <Grid item xs={12} md={12}>
-                    {!formikBag.isSubmitting ? <React.Fragment><Button size={'large'} fullWidth={isXs} variant="contained" color="primary" type="submit">Guardar</Button><Button size={'large'} fullWidth={isXs} variant="contained" color="secondary" type="submit">Cancelar</Button></React.Fragment> :<CircularProgress />}  
+                  <Grid item xs={12} md={12} container direction="row" justify="flex-end" spacing={2}>
+                    {!formikBag.isSubmitting ? (
+                      <React.Fragment>
+                        <Grid item xs={12}>
+                          <Button size={'large'} fullWidth={isXs} variant="contained" color="primary" type="submit">Guardar</Button>
+                        </Grid>
+                        <Grid item  xs={12}>
+                          <Link href="/dashboard">
+                            <Button size={'large'} fullWidth={isXs} variant="contained" color="secondary" type="button">Cancelar</Button>
+                          </Link>
+                        </Grid>
+                      </React.Fragment>
+                    )
+                      : <Grid item><CircularProgress /></Grid>}  
                   </Grid>
                   
                   </Grid>
@@ -277,6 +291,9 @@ function StudentEdit({ studentId }) {
               h2{
                   padding-top: 20px;
                   padding-bottom: 20px;
+              }
+              .edit-container{
+                margin-bottom: 100px;
               }
           `}</style>
       </Container>

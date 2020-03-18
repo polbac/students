@@ -10,14 +10,21 @@ function AppHeader() {
     const loading = useSelector(isLoading)
     const { dashboard } = useLocale()
     return (
-        <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" >
-                {dashboard.title}
-                </Typography>
-            </Toolbar>
-            {loading ? <LinearProgress /> : null}
-        </AppBar>
+        <header className='header'>
+            <AppBar position="fixed">
+                <Toolbar>
+                    <Typography variant="h6" >
+                    {dashboard.title}
+                    </Typography>
+                </Toolbar>
+                {loading ? <LinearProgress /> : null}
+            </AppBar>
+            <style jsx>{`
+                .header{
+                    margin-bottom: 80px;
+                }
+            `}</style>
+        </header>
     )
 }
 

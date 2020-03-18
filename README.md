@@ -1,8 +1,10 @@
 ## TODO
 
 ✅ UI Filters
-❌ Botones edit
+✅ Botones edit
 ❌ Date Error
-❌ push history
+✅ push history
 ❌ Deploy
 ❌ JWT on other endpoints
+❌ Collapse filters
+❌ Theme Context

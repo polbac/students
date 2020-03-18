@@ -69,7 +69,7 @@ function StudentList({ children }) {
                                     <TableCell>{student.career.name}</TableCell>
                                     <TableCell>{student.country.name}</TableCell>
                                     <TableCell>
-                                    <Link href={`dashboard/${student.id}`}>
+                                    <Link href="/dashboard/[id]" as={`dashboard/${student.id}`}>
                                         <Button
                                             size="small"
                                             variant="contained"

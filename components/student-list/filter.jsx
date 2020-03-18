@@ -31,110 +31,110 @@ export default function StudentsListFilter() {
         <section className='filter'>
             <Card>
                 <CardContent>
-            <Typography >
-                Filtros
-            </Typography>
-            <Formik
-                initialValues={initialValues}
-                validateOnChange={true}
-                validate={values => {
-                    if(!isEqual(values, filters)) {
-                        dispatch(setFilterList(values.name, values.email, values.career, values.country))
-                        dispatch(fetchList())
-                    }
-                }}
-                render={formikBag => (
-                    <Form>
-                        <Grid container  spacing={3}>
-                            <Grid item spacing={0} xs="12" md="3">
-                                <Field
-                                name="name"
-                                render={({ field, form, meta }) => (
-                                    <FormControl fullWidth>
-                                    <TextField 
-                                        size="small"
-                                        value={field.value} 
-                                        label={name}
-                                        {...field}
-                                    />
-                                    </FormControl>
-                                )}
-                                />
-                            </Grid>
-                            <Grid item spacing={0} xs="12" md="3">
-                                <Field
-                                name="email"
-                                render={({ field, form, meta }) => (
-                                    <FormControl fullWidth>
-                                    <TextField 
-                                        size="small"
-                                        value={field.value} 
-                                        label={email}
-                                        {...field}
-                                    />
-                                    </FormControl>
-                                )}
-                                />
-                            </Grid>
-                            
-                            {/* Careers */}
-                            <Grid  item spacing={0} xs="12" md="3">
-                                {options.careers ? (
-                                    <Field
-                                        name="career"
+                    <Typography >
+                        Filtros
+                    </Typography>
+                    <Formik
+                        initialValues={initialValues}
+                        validateOnChange={true}
+                        validate={values => {
+                            if(!isEqual(values, filters)) {
+                                dispatch(setFilterList(values.name, values.email, values.career, values.country))
+                                dispatch(fetchList())
+                            }
+                        }}
+                        render={formikBag => (
+                            <Form>
+                                <Grid container  spacing={3}>
+                                    <Grid item spacing={0} xs="12" md="3">
+                                        <Field
+                                        name="name"
                                         render={({ field, form, meta }) => (
-                                        <FormControl fullWidth>
-                                            <TextField
-                                            label={career}
-                                            id="career"
-                                            select
-                                            {...field}
-                                            >
-                                            {options.careers.map(option => (
-                                            <MenuItem key={option.id} value={option.id}>
-                                                {option.name}
-                                            </MenuItem>
-                                            ))}
-                                            </TextField>
-
+                                            <FormControl fullWidth>
+                                            <TextField 
+                                                size="small"
+                                                value={field.value} 
+                                                label={name}
+                                                {...field}
+                                            />
                                             </FormControl>
                                         )}
-                                    />
-                                ): <LinearProgress color="primary" />}
-                            </Grid>
-
-
-                            {/* Countries */}
-                            <Grid  item spacing={0} xs="12" md="3">
-                                {options.countries ? (
-                                    <Field
-                                        name="country"
+                                        />
+                                    </Grid>
+                                    <Grid item spacing={0} xs="12" md="3">
+                                        <Field
+                                        name="email"
                                         render={({ field, form, meta }) => (
-                                        <FormControl fullWidth>
-                                            <TextField
-                                            label={country}
-                                            id="country"
-                                            select
-                                            {...field}
-                                            >
-                                            {options.countries.map(option => (
-                                                <MenuItem key={option.id} value={option.id}>
-                                                    {option.name}
-                                                </MenuItem>
-                                            ))}
-                                            </TextField>
-
+                                            <FormControl fullWidth>
+                                            <TextField 
+                                                size="small"
+                                                value={field.value} 
+                                                label={email}
+                                                {...field}
+                                            />
                                             </FormControl>
                                         )}
-                                    />
-                                ): <LinearProgress color="primary" />}
-                            </Grid>
+                                        />
+                                    </Grid>
+                                    
+                                    {/* Careers */}
+                                    <Grid  item spacing={0} xs="12" md="3">
+                                        {options.careers ? (
+                                            <Field
+                                                name="career"
+                                                render={({ field, form, meta }) => (
+                                                <FormControl fullWidth>
+                                                    <TextField
+                                                    label={career}
+                                                    id="career"
+                                                    select
+                                                    {...field}
+                                                    >
+                                                    {options.careers.map(option => (
+                                                    <MenuItem key={option.id} value={option.id}>
+                                                        {option.name}
+                                                    </MenuItem>
+                                                    ))}
+                                                    </TextField>
+
+                                                    </FormControl>
+                                                )}
+                                            />
+                                        ): <LinearProgress color="primary" />}
+                                    </Grid>
 
 
-                        </Grid> 
-                    </Form>
-                    )}
-            />
+                                    {/* Countries */}
+                                    <Grid  item spacing={0} xs="12" md="3">
+                                        {options.countries ? (
+                                            <Field
+                                                name="country"
+                                                render={({ field, form, meta }) => (
+                                                <FormControl fullWidth>
+                                                    <TextField
+                                                    label={country}
+                                                    id="country"
+                                                    select
+                                                    {...field}
+                                                    >
+                                                    {options.countries.map(option => (
+                                                        <MenuItem key={option.id} value={option.id}>
+                                                            {option.name}
+                                                        </MenuItem>
+                                                    ))}
+                                                    </TextField>
+
+                                                    </FormControl>
+                                                )}
+                                            />
+                                        ): <LinearProgress color="primary" />}
+                                    </Grid>
+
+
+                                </Grid> 
+                            </Form>
+                            )}
+                    />
             </CardContent>
             </Card>
             <style jsx>{`
