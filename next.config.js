@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV || 'development'
-const envConfig = require('./.env.' + env + '.json')
+const envConfig = require('./env.' + env + '.json')
 
 console.log ('Building with env: ', env)
 

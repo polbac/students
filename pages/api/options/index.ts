@@ -1,5 +1,5 @@
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
-import getConnection from '../../../connection'
+import { getConnection } from '../../../connection'
 import { HttpMethod } from "../../../models/http"
 
 
@@ -9,7 +9,7 @@ export default async (req: any, res: any) => {
     if (method === HttpMethod.GET) {
      
         try {        
-            const connection = getConnection()
+            const connection = await getConnection()
             const countries = await connection.manager.find('country');
             const careers = await connection.manager.find('career');
             const paymentMethodOptions = await connection.manager.find('PaymentMethodOption');
@@ -18,8 +18,8 @@ export default async (req: any, res: any) => {
                 countries,
                 careers,
                 paymentMethodOptions
-                
             })
+
         } catch(err) {
             console.log('API :: Options :: Error', err)
             createErrorResponse(res)

@@ -1,6 +1,6 @@
 import { Like } from 'typeorm'
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
-import getConnection from '../../../connection'
+import { getConnection } from '../../../connection'
 import { HttpMethod } from "../../../models/http"
 
 
@@ -10,7 +10,7 @@ export default async (req: any, res: any) => {
 
     if (method === HttpMethod.GET) {
         try {        
-            const connection = getConnection()
+            const connection = await getConnection()
             let where: any = {}
 
             if (email) {
@@ -29,7 +29,6 @@ export default async (req: any, res: any) => {
                 where.country = country
             }
 
-
             const students = await connection.getRepository('student')
                 .find({ 
                     relations: ['career', 'country'],
@@ -40,8 +39,9 @@ export default async (req: any, res: any) => {
             createResponse(res, {
                 students,
             })
+
         } catch(err) {
-            console.log('API :: Country :: Error', err)
+            console.log('API :: Student :: Error', err)
             createErrorResponse(res)
         }
     }

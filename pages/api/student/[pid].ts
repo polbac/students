@@ -1,5 +1,5 @@
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
-import getConnection from '../../../connection'
+import { getConnection } from '../../../connection'
 import { HttpMethod } from "../../../models/http"
 import { Student } from "../../../database/entity/Student"
 
@@ -8,7 +8,7 @@ export default async (req: any, res: any) => {
 
     const { method } = req
     
-    const connection = getConnection()
+    const connection = await getConnection()
     const repository = await connection.getRepository('student')
 
     if (method === HttpMethod.PUT) {
@@ -20,6 +20,7 @@ export default async (req: any, res: any) => {
             createResponse(res, {
                 saved,
             })
+
         } catch (err) {
             console.log('API :: Save Student {pid} :: Error', err)
             createErrorResponse(res)
@@ -37,6 +38,7 @@ export default async (req: any, res: any) => {
             createResponse(res, {
                 student,
             })
+
         } catch(err) {
             console.log('API :: Fetch Student {pid} :: Error', err)
             createErrorResponse(res)

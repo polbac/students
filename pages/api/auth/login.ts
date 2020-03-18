@@ -18,6 +18,8 @@ export default async (req: Request, res: Response) => {
                     token,
                 },
             })
+
+            
         } catch(err) {
             createNotFoundResponse(res, 'userNotFound');
         }

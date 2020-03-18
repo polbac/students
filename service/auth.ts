@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { getConnection } from 'typeorm'
+import { getConnection } from '../connection'
 
 var md5 = require('md5');
 
@@ -19,7 +19,7 @@ export function valid(token: string) {
 export function auth(user: string, password: string): Promise<{ email: string, token: string }> {
     return new Promise(async(resolve, reject) => {
         if (user && password) {
-            const connection = getConnection()
+            const connection = await getConnection()
             const findUser: any = await connection.manager.findOne('user', {
                 where: [
                     { user, password: md5(password) },
@@ -35,6 +35,7 @@ export function auth(user: string, password: string): Promise<{ email: string, t
                 })
                 return
             }
+
             reject()
         }
     })

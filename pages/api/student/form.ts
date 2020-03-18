@@ -1,5 +1,5 @@
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
-import getConnection from '../../../connection'
+import { getConnection } from '../../../connection'
 import { PaymentMethodSchema } from '../../../schemas/paymentMethod'
 
 
@@ -10,13 +10,14 @@ export default async (req: any, res: any) => {
         const validation = await PaymentMethodSchema.isValid(student)
     
         if (validation) {
-            await getConnection().manager.insert('student', student)
+            const connection = await getConnection()
+            connection.manager.insert('student', student)
 
             createResponse(res, {
                 success: true,
             })
-            return
-        }
+            
+        }   
 
         createErrorResponse(res, 'fieldErrors')
         
