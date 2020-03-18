@@ -1,4 +1,4 @@
-import { SET_EDIT, UNSET_EDIT, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, SET_SESSION, UNSET_SESSION, AUTH_NOT_FOUND, AUTH_SERVER_ERROR, AUTH_LOADING, AUTH_NOT_LOADING, SET_LIST } from './actions'
+import { SET_OPTIONS, FETCH_OPTIONS, SET_EDIT, UNSET_EDIT, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, SET_SESSION, UNSET_SESSION, AUTH_NOT_FOUND, AUTH_SERVER_ERROR, AUTH_LOADING, AUTH_NOT_LOADING, SET_LIST, SET_LIST_FILTER } from './actions'
 
 const initSession = {
     token: null,
@@ -11,6 +11,12 @@ const initSession = {
 
 const initList = {
     students: [],
+    filters: {
+        name: '',
+        email: '',
+        career: null,
+        country: null
+    },
     serverError: false
 }
 
@@ -23,9 +29,28 @@ const initEdit = {
     careers: null,
     countries: null,
     paymentMethodOptions: null,
-
 }
 
+const initOptions = {
+    careers: null,
+    countries: null,
+    paymentMethodOptions: null,
+}
+
+const optionsReducer = (state = initOptions, action) => {
+    switch (action.type) {
+        case SET_OPTIONS:
+            return {
+                careers: action.careers,
+                countries: action.countries,
+                paymentMethodOptions: action.paymentMethodOptions,
+            }
+        default:
+            return {
+                ...state
+            }
+    }
+}
 const editReducer = (state = initEdit, action) => {
     switch (action.type) {
         case SET_EDIT:
@@ -70,8 +95,20 @@ const listReducer = (state = initList, action) => {
     switch (action.type) {
         case SET_LIST:
             return {
+                ...state,
                 serverError: false,
                 students: action.students
+            }
+
+        case SET_LIST_FILTER:
+            return {
+                ...state,
+                filters: {
+                    name: action.name,
+                    email: action.email,
+                    career: action.career,
+                    country: action.country
+                }
             }
         default:
             return {
@@ -138,4 +175,5 @@ export {
     listReducer,
     loaderReducer,
     editReducer,
+    optionsReducer,
 }

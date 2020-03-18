@@ -5,3 +5,9 @@ export const selectEdit = store => ({
     countries: store.edit.countries,
     paymentMethodOptions: store.edit.paymentMethodOptions,
 })
+export const selectFilters = store => ({
+    name: store.list.filters.name,
+    email: store.list.filters.email,
+    career: store.list.filters.career,
+    country: store.list.filters.country,
+})

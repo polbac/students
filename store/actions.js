@@ -1,5 +1,4 @@
 import Router from 'next/router'
-
 import apiClient from '../lib/client'
 
 export const SHOW_MAIN_LOADER = "SHOW_MAIN_LOADER"
@@ -14,10 +13,14 @@ export const AUTH_NOT_LOADING = "AUTH_NOT_LOADING"
 
 export const FETCH_LIST = "FETCH_LIST"
 export const SET_LIST = "SET_LIST"
+export const SET_LIST_FILTER = "SET_LIST_FILTER"
 
 export const SET_EDIT = "SET_EDIT"
 export const UNSET_EDIT = "UNSET_EDIT"
 export const SAVE_STUDENT = "SAVE_STUDENT"
+
+export const FETCH_OPTIONS = "FETCH_OPTIONS"
+export const SET_OPTIONS = "SET_OPTIONS"
 
 export const authorize = (email, password) => dispatch => {
     dispatch(authSetLoading())
@@ -61,8 +64,23 @@ export const saveStudent = student => dispatch => {
     
 }
 
-export const fetchStudentEdit = id => dispatch => {
+const shouldFetchOptions = (getState) => {
+    const { options: { careers, countries, paymentMethodOptions } } = getState()
+    
+    if (!careers || !countries || !paymentMethodOptions) {
+        return true
+    }
+
+    return false
+}
+
+export const fetchStudentEdit = id => (dispatch, getState) => {
+    if (shouldFetchOptions(getState)) {
+        dispatch(fetchOptions()) 
+    }
+
     dispatch(showMainLoader())
+
     apiClient
         .get(`student/${id}`)
         .then(async res => {
@@ -73,10 +91,16 @@ export const fetchStudentEdit = id => dispatch => {
         })
 }
 
-export const fetchList = () => dispatch => {
+export const fetchList = () => (dispatch, getState) => {
     dispatch(showMainLoader())
+
+    if (shouldFetchOptions(getState)) {
+        dispatch(fetchOptions()) 
+    }
+    
+    const { list: { filters }} = getState()
     apiClient
-        .get('student', {}, true)
+        .get('student', filters, true)
         .then(async res => {
             dispatch(hideMainLoader())
             const studentsJson = await res.json()
@@ -124,6 +148,24 @@ export const unsetSession = () => dispatch => {
     })
 }
 
+export const fetchOptions = () => dispatch => {
+    dispatch(showMainLoader())
+    apiClient
+        .get('options', {}, true)
+        .then(async res => {
+            const responseJson = await res.json()
+            const { body: { countries, careers, paymentMethodOptions } } = responseJson
+            dispatch(setOptions(countries, careers, paymentMethodOptions))
+        })
+        .catch(err => console.log(err))
+}
+
+export const setOptions = (countries, careers, paymentMethodOptions) => ({
+    type: SET_OPTIONS,
+    countries, careers, paymentMethodOptions
+})
+
+
 export const authNotFound = () => ({
     type: AUTH_NOT_FOUND,
 })
@@ -146,5 +188,10 @@ export const showMainLoader = () => ({
 
 export const hideMainLoader = () => ({
     type: HIDE_MAIN_LOADER,
+})
+
+export const setFilterList = (name, email, career, country) => ({
+    type: SET_LIST_FILTER,
+    name, email, career, country
 })
 

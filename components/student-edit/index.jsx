@@ -22,12 +22,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import FieldError from '../field-error'
 import { fetchStudentEdit, saveStudent, unsetStudentEdit } from '../../store/actions'
 import { selectEdit } from '../../selectors/students'
+import { selectOptions } from '../../selectors/options'
 
 const PAYMENT_METHOD_CC_ID = 1
 
 function StudentEdit({ studentId }) {
   const dispatch = useDispatch()
-  const { student, countries, careers, paymentMethodOptions } = useSelector(selectEdit)
+  const { student } = useSelector(selectEdit)
+  const { countries, careers, paymentMethodOptions } = useSelector(selectOptions)
   const isXs = useMedia({maxWidth: '600px'});
   const { edit, paymentMethodForm: { form } } = useLocale()
   const { paymentMethodForm } = useLocale()
@@ -38,7 +40,7 @@ function StudentEdit({ studentId }) {
       return () => dispatch(unsetStudentEdit(studentId))
   }, [])
 
-  if (!student, !countries, !careers, !paymentMethodOptions) {
+  if (!student || !countries || !careers || !paymentMethodOptions) {
     return <React.Fragment />
   }
 

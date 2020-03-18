@@ -31,16 +31,10 @@ export default async (req: any, res: any) => {
             const student = await repository.find({
                     where: [{ id: pid }], 
                     relations: ['career', 'country'] })
-            
-            const countries = await connection.manager.find('country')
-            const careers = await connection.manager.find('career')
-            const paymentMethodOptions = await connection.manager.find('PaymentMethodOption');
+        
 
             createResponse(res, {
                 student,
-                countries,
-                careers,
-                paymentMethodOptions,
             })
         } catch(err) {
             console.log('API :: Fetch Student {pid} :: Error', err)

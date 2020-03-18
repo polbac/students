@@ -12,24 +12,39 @@ import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import Link from 'next/link'
 import useLocale from '../../hooks/locale'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchList } from '../../store/actions'
 import { selectList } from '../../selectors/students'
+import { isLoading } from '../../selectors/loader'
+import StudentsListFilter from './filter'
 
 function StudentList({ children }) {
     const { list } = useLocale()
     const dispatch = useDispatch()
     const students = useSelector(selectList)
+    const loading = useSelector(isLoading)
+    const [mainLoader, setMainLoader] = useState(true)
     
     useEffect(() => {
         dispatch(fetchList())
     }, [])
 
+    if (!loading && mainLoader) {
+        setMainLoader(false)
+    }
+    
+    if (mainLoader) {
+        return <React.Fragment />
+    }
+
     return (
         <Container maxWidth="md" className='container'>
             <Grid md="12">
             <h2>{list.title}</h2>
+            </Grid>
+            <Grid>
+                <StudentsListFilter />
             </Grid>
             <Grid md="12">
                 <TableContainer component={Paper}>
