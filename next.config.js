@@ -1,17 +1,15 @@
-const path = require('path')
-
 const env = process.env.NODE_ENV || 'development'
+const envConfig = require('./.env.' + env + '.json')
 
-require('dotenv').config({
-  path: path.join(__dirname, `.env.${env}`),
-  systemvars: true
-})
+console.log ('Building with env: ', env)
+
+console.log ('Building with config: ', envConfig)
 
 module.exports = {
     serverRuntimeConfig: {
-      api: process.env.API_URL
+      api: envConfig.api_url
     },
     publicRuntimeConfig: {
-      api: process.env.API_URL
+      api: envConfig.api_url
     },
   }

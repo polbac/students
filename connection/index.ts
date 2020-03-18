@@ -5,27 +5,20 @@ import { PaymentMethodOption } from '../database/entity/PaymentMethodOption'
 import { Student } from '../database/entity/Student'
 import { User } from '../database/entity/User'
 
-const path = require('path')
-
 import ("reflect-metadata")
 
-const env = process.env.NODE_ENV || 'development'
-
-require('dotenv').config({
-    path: path.join(__dirname, `.env.${env}`),
-    systemvars: true
-  })
+const ormConfig = require('../ormconfig.json')
 
 export function makeConnection(): Promise<Connection> {
     return new Promise(async (resolve, reject) => {
         try {
             (global as any).connection = await createConnection({
-                type: process.env.DB_TYPE,
-                host: process.env.DB_HOST,
-                port: process.env.DB_PORT,
-                username: process.env.DB_USERNAME,
-                password: process.env.DB_PASSWORD,
-                database: process.env.DB_DATABASE,
+                type: ormConfig.type,
+                host: ormConfig.host,
+                port: ormConfig.port,
+                username: ormConfig.username,
+                password: ormConfig.password,
+                database: ormConfig.database,
                 entities: [ Country, Career, Student, PaymentMethodOption, User ],
             } as ConnectionOptions)
             resolve()
