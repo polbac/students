@@ -9,6 +9,7 @@ import { User } from '../database/entity/User'
 import ("reflect-metadata")
 
 const ormConfig = require('../ormconfig.json')
+
 const CONNECTION_NAME = 'acamica-students'
 
 export function getConnection(): Promise<Connection> {

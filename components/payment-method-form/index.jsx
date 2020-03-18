@@ -156,17 +156,22 @@ function PaymentMethodForm(props) {
 
                     <Grid item md={6} xs={12}>
                       <Field
-                        name="bir_date"
+                        name="birth_date"
                         render={({ field, form, meta }) => (
                           <FormControl fullWidth>
                           <KeyboardDatePicker
+                            variant="inline"
                             disableToolbar
                             format="MM/dd/yyyy"
                             label={l.birthdate.label}
                             KeyboardButtonProps={{
                               'aria-label': 'change date',
                             }}
-                            {...field}
+                            name="birth_date"
+                            value={field.value}
+                            onChange={value => {
+                              form.setFieldValue("birth_date", value)
+                            }}
                           />
                           <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
                             </FormControl>
@@ -219,13 +224,13 @@ function PaymentMethodForm(props) {
                     </Grid>
 
 
-                    <Grid item md={12} xs={12}>
+                    <Grid item lg={12} xs={12}>
                         <h4>
                           {paymentMethodForm.payment}
                         </h4>
                     </Grid>
 
-                    <Grid item md={12} xs={12}>
+                    <Grid item lg={12} xs={12}>
                       <Field
                           name="payment_method"
                           render={({ field, form, meta }) => (
@@ -247,8 +252,9 @@ function PaymentMethodForm(props) {
                           )}
                         />
                     </Grid>
+
                     {formikBag.values.payment_method === PAYMENT_METHOD_CC_ID && (
-                      <Grid item md={12} xs={12}>
+                      <Grid item lg={12} xs={12}>
                         <Field
                             name="installments"
                             render={({ field, form, meta }) => (
@@ -272,7 +278,7 @@ function PaymentMethodForm(props) {
                       </Grid>
                     )}
                     
-                    <Grid item xs={12} md={12}>
+                    <Grid item lg={12} xs={12}>
                       {!formikBag.isSubmitting ? <Button size={'large'} fullWidth={isXs} variant="contained" color="primary" type="submit">Enviar</Button> :<CircularProgress />}  
                     </Grid>
                     

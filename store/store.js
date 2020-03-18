@@ -1,4 +1,4 @@
-import { sessionReducer, listReducer, loaderReducer, editReducer, optionsReducer } from './reducer';
+import { sessionReducer, listReducer, loaderReducer, editReducer, optionsReducer, mainErrorReducer } from './reducer';
 import {combineReducers, createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
 
@@ -7,7 +7,8 @@ const rootReducer = combineReducers({
     list: listReducer,
     loading: loaderReducer,
     edit: editReducer,
-    options: optionsReducer
+    options: optionsReducer,
+    mainError: mainErrorReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk))

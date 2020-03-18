@@ -1,0 +1,1 @@
+export const selectMainError = state => state.mainError.error

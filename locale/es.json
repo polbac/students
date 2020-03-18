@@ -79,11 +79,15 @@
         "email": "Correo electrónico",
         "career": "Carrera",
         "country": "País",
-        "edit": "Editar"
+        "edit": "Editar",
+        "seeAll": "Ver todos"
     },
     "edit": {
         "title": "Editar Estudiante",
         "personal": "Datos Personales",
         "payment": "Método de Pago"
+    },
+    "error": {
+        "title": "Ups! Ocurrió un error, recarga la página por favor"
     }
 }

@@ -1,6 +1,8 @@
 import Router from 'next/router'
 import apiClient from '../lib/client'
 
+export const SHOW_MAIN_ERROR = "SHOW_MAIN_ERROR"
+
 export const SHOW_MAIN_LOADER = "SHOW_MAIN_LOADER"
 export const HIDE_MAIN_LOADER = "HIDE_MAIN_LOADER"
 
@@ -89,6 +91,11 @@ export const fetchStudentEdit = id => (dispatch, getState) => {
             const { body: { student, countries, careers, paymentMethodOptions }} = studentResponse
             dispatch(setStudentEdit(student, countries, careers, paymentMethodOptions))
         })
+        .catch(err => {
+            console.log(err)
+            dispatch(hideMainLoader())
+            dispatch(showMainError())
+        })
 }
 
 export const fetchList = () => (dispatch, getState) => {
@@ -107,7 +114,11 @@ export const fetchList = () => (dispatch, getState) => {
             const { body: { students } } = studentsJson
             dispatch(setList(students))
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+            dispatch(hideMainLoader())
+            dispatch(showMainError())
+        })
 }
 
 export const setList = students => ({
@@ -195,3 +206,6 @@ export const setFilterList = (name, email, career, country) => ({
     name, email, career, country
 })
 
+export const showMainError = () => ({
+    type: SHOW_MAIN_ERROR
+})

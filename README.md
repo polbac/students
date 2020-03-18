@@ -2,9 +2,9 @@
 
 ✅ UI Filters
 ✅ Botones edit
-❌ Date Error
+✅ Date Error
 ✅ push history
-❌ Deploy
+✅ Deploy (funciona intermitente la BD)
+❌ Edit / List Server Errors
 ❌ JWT on other endpoints
-❌ Collapse filters
 ❌ Theme Context

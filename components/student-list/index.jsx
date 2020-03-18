@@ -14,9 +14,11 @@ import Link from 'next/link'
 import useLocale from '../../hooks/locale'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import FetchError from '../fetch-error'
 import { fetchList } from '../../store/actions'
 import { selectList } from '../../selectors/students'
 import { isLoading } from '../../selectors/loader'
+import { selectMainError } from '../../selectors/error'
 import StudentsListFilter from './filter'
 
 function StudentList({ children }) {
@@ -24,6 +26,7 @@ function StudentList({ children }) {
     const dispatch = useDispatch()
     const students = useSelector(selectList)
     const loading = useSelector(isLoading)
+    const mainError = useSelector(selectMainError)
     const [mainLoader, setMainLoader] = useState(true)
     
     useEffect(() => {
@@ -36,6 +39,10 @@ function StudentList({ children }) {
     
     if (mainLoader) {
         return <React.Fragment />
+    }
+    
+    if (mainError) {
+        return <FetchError />
     }
 
     return (

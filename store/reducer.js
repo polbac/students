@@ -1,4 +1,4 @@
-import { SET_OPTIONS, FETCH_OPTIONS, SET_EDIT, UNSET_EDIT, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, SET_SESSION, UNSET_SESSION, AUTH_NOT_FOUND, AUTH_SERVER_ERROR, AUTH_LOADING, AUTH_NOT_LOADING, SET_LIST, SET_LIST_FILTER } from './actions'
+import { SET_OPTIONS, SHOW_MAIN_ERROR, SET_EDIT, UNSET_EDIT, SHOW_MAIN_LOADER, HIDE_MAIN_LOADER, SET_SESSION, UNSET_SESSION, AUTH_NOT_FOUND, AUTH_SERVER_ERROR, AUTH_LOADING, AUTH_NOT_LOADING, SET_LIST, SET_LIST_FILTER } from './actions'
 
 const initSession = {
     token: null,
@@ -24,6 +24,11 @@ const initLoader = {
     loading: false,
 }
 
+const initMainError = {
+    error: false,
+}
+
+
 const initEdit = {
     student: null,
     careers: null,
@@ -35,6 +40,19 @@ const initOptions = {
     careers: null,
     countries: null,
     paymentMethodOptions: null,
+}
+
+const mainErrorReducer = (state = initMainError, action) => {
+    switch (action.type) {
+        case SHOW_MAIN_ERROR:
+            return {
+                error: true
+            }
+        default:
+            return {
+                ...state
+            }
+    }
 }
 
 const optionsReducer = (state = initOptions, action) => {
@@ -176,4 +194,5 @@ export {
     loaderReducer,
     editReducer,
     optionsReducer,
+    mainErrorReducer,
 }

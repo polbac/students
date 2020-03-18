@@ -25,6 +25,8 @@ import FieldError from '../field-error'
 import { fetchStudentEdit, saveStudent, unsetStudentEdit } from '../../store/actions'
 import { selectEdit } from '../../selectors/students'
 import { selectOptions } from '../../selectors/options'
+import { selectMainError } from '../../selectors/error'
+import FetchError from '../fetch-error'
 
 const PAYMENT_METHOD_CC_ID = 1
 
@@ -32,6 +34,7 @@ function StudentEdit({ studentId }) {
   const dispatch = useDispatch()
   const { student } = useSelector(selectEdit)
   const { countries, careers, paymentMethodOptions } = useSelector(selectOptions)
+  const mainError = useSelector(selectMainError)
   const isXs = useMedia({maxWidth: '600px'});
   const { edit, paymentMethodForm: { form } } = useLocale()
   const { paymentMethodForm } = useLocale()
@@ -41,6 +44,10 @@ function StudentEdit({ studentId }) {
       dispatch(fetchStudentEdit(studentId))
       return () => dispatch(unsetStudentEdit(studentId))
   }, [])
+
+  if (mainError) {
+      return <FetchError />
+  }
 
   if (!student || !countries || !careers || !paymentMethodOptions) {
     return <React.Fragment />
@@ -65,128 +72,77 @@ function StudentEdit({ studentId }) {
   const l = form
   
   return (
-      <Container maxWidth="md" className='edit-container'>
-          <Grid md="12">
-          <h2>{edit.title}</h2>
-          </Grid>
-          <Grid md="12">
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={PaymentMethodSchema}
-              onSubmit={(values, actions) => {
-                dispatch(saveStudent(values))
-              }}
-              render={formikBag => (
-                <Form>
-                <Grid container spacing={3}>
-                
-                {serverError && <Alert severity="error" fullWidth>{paymentMethodForm.serverError}</Alert>}
-
-                <Grid item md={12}>
-                    <h4>
-                      {edit.personal}
-                    </h4>
-                </Grid>
+    <React.Fragment>
+      <section className="edit-container">
+        <Container maxWidth="md" >
+            <Grid md="12">
+            <h2>{edit.title}</h2>
+            </Grid>
+            <Grid md="12">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={PaymentMethodSchema}
+                onSubmit={(values, actions) => {
+                  dispatch(saveStudent(values))
+                }}
+                render={formikBag => (
+                  <Form>
+                  <Grid container spacing={3}>
                   
-                  <Grid item md={12} xs={12}>
-                    <Field
-                      name="name"
-                      render={({ field, form, meta }) => (
-                        <FormControl fullWidth>
-                          <TextField 
-                            value={field.value} 
-                            label={l.name.label}
-                            {...field}
-                          />
-                          <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
-                        </FormControl>
-                      )}
-                    />
-                  </Grid>
-                  
-                  <Grid item md={12} xs={12}>
-                    <Field
-                      name="email"
-                      render={({ field, form, meta }) => (
-                        <FormControl fullWidth>
-                          <TextField 
-                            value={field.value} 
-                            label={l.email.label} 
-                            id={l.email.label} 
-                            {...field}
-                          />
-                          <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
-                          </FormControl>
-                      )}
-                    />
-                  </Grid>
+                  {serverError && <Alert severity="error" fullWidth>{paymentMethodForm.serverError}</Alert>}
 
-                  <Grid item md={12} xs={12}>
-                  <Field
-                    name="career"
-                    render={({ field, form, meta }) => (
-                      <FormControl fullWidth>
-                        <TextField
-                        label={l.career.label}
-                        id="career"
-                        select
-                        {...field}
-                        >
-                        {careers.map(option => (
-                          <MenuItem key={option.id} value={option.id}>
-                            {option.name}
-                          </MenuItem>
-                        ))}
-                        </TextField>
-                        <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
-                        </FormControl>
-                    )}
-                  />
+                  <Grid item md={12}>
+                      <h4>
+                        {edit.personal}
+                      </h4>
                   </Grid>
+                    
+                    <Grid item md={12} xs={12}>
+                      <Field
+                        name="name"
+                        render={({ field, form, meta }) => (
+                          <FormControl fullWidth>
+                            <TextField 
+                              value={field.value} 
+                              label={l.name.label}
+                              {...field}
+                            />
+                            <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                          </FormControl>
+                        )}
+                      />
+                    </Grid>
+                    
+                    <Grid item md={12} xs={12}>
+                      <Field
+                        name="email"
+                        render={({ field, form, meta }) => (
+                          <FormControl fullWidth>
+                            <TextField 
+                              value={field.value} 
+                              label={l.email.label} 
+                              id={l.email.label} 
+                              {...field}
+                            />
+                            <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                            </FormControl>
+                        )}
+                      />
+                    </Grid>
 
-                  <Grid item md={12} xs={12}>
+                    <Grid item md={12} xs={12}>
                     <Field
-                      name="bir_date"
-                      render={({ field, form, meta }) => (
-                        <FormControl fullWidth>
-                        <KeyboardDatePicker
-                          disableToolbar
-                          format="MM/dd/yyyy"
-                          label={l.birthdate.label}
-                          KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                          }}
-                          {...field}
-                        />
-                        <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
-                          </FormControl>
-                      )}
-                    />
-                  </Grid>
-                  <Grid item md={12} xs={12}>
-                    <Field
-                      name="phone_number"
-                      render={({ field, form, meta }) => (
-                        <FormControl fullWidth>
-                          <TextField value={field.value} label={l.phone.label} id={l.email.label} {...field} aria-describedby={l.email.label} />
-                          <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
-                          </FormControl>
-                      )}
-                    />
-                  </Grid>
-                  <Grid item md={12} xs={12}>
-                    <Field
-                      name="country"
+                      name="career"
                       render={({ field, form, meta }) => (
                         <FormControl fullWidth>
                           <TextField
-                          label={l.country.label}
-                          value={field.value}
+                          label={l.career.label}
+                          id="career"
                           select
                           {...field}
                           >
-                          {countries.map(option => (
+                          {careers.map(option => (
                             <MenuItem key={option.id} value={option.id}>
                               {option.name}
                             </MenuItem>
@@ -196,38 +152,53 @@ function StudentEdit({ studentId }) {
                           </FormControl>
                       )}
                     />
-                  </Grid>
-                  <Grid item md={12} xs={12}>
-                  <Field
-                    name="city"
-                    render={({ field, form, meta }) => (
-                      <FormControl fullWidth>
-                        <TextField label={l.city.label} id="city" {...field} aria-describedby={l.city.label} />
-                        <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
-                        </FormControl>
-                    )}
-                  />
-                  </Grid>
+                    </Grid>
 
-
-                  <Grid item md={12} xs={12}>
-                      <h4>
-                        {edit.payment}
-                      </h4>
-                  </Grid>
-
-                  <Grid item md={12}>
-                    <Field
-                        name="payment_method"
+                    <Grid item md={12} xs={12}>
+                      <Field
+                        name="birth_date"
+                        render={({ field, form, meta }) => (
+                          <FormControl fullWidth>
+                          <KeyboardDatePicker
+                            disableToolbar
+                            format="MM/dd/yyyy"
+                            label={l.birthdate.label}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                            {...field}
+                            onChange={value => {
+                                form.setFieldValue("birth_date", value)
+                              }}
+                          />
+                          <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                            </FormControl>
+                        )}
+                      />
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                      <Field
+                        name="phone_number"
+                        render={({ field, form, meta }) => (
+                          <FormControl fullWidth>
+                            <TextField value={field.value} label={l.phone.label} id={l.email.label} {...field} aria-describedby={l.email.label} />
+                            <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                            </FormControl>
+                        )}
+                      />
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                      <Field
+                        name="country"
                         render={({ field, form, meta }) => (
                           <FormControl fullWidth>
                             <TextField
-                            label={l.paymentMethod.label}
+                            label={l.country.label}
                             value={field.value}
                             select
                             {...field}
                             >
-                            {paymentMethodOptions.map(option => (
+                            {countries.map(option => (
                               <MenuItem key={option.id} value={option.id}>
                                 {option.name}
                               </MenuItem>
@@ -237,22 +208,40 @@ function StudentEdit({ studentId }) {
                             </FormControl>
                         )}
                       />
-                  </Grid>
-                  {formikBag.values.payment_method === PAYMENT_METHOD_CC_ID && (
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                    <Field
+                      name="city"
+                      render={({ field, form, meta }) => (
+                        <FormControl fullWidth>
+                          <TextField label={l.city.label} id="city" {...field} aria-describedby={l.city.label} />
+                          <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                          </FormControl>
+                      )}
+                    />
+                    </Grid>
+
+
+                    <Grid item md={12} xs={12}>
+                        <h4>
+                          {edit.payment}
+                        </h4>
+                    </Grid>
+
                     <Grid item md={12} xs={12}>
                       <Field
-                          name="installments"
+                          name="payment_method"
                           render={({ field, form, meta }) => (
                             <FormControl fullWidth>
                               <TextField
-                              label={l.installments.label}
+                              label={l.paymentMethod.label}
                               value={field.value}
                               select
                               {...field}
                               >
-                              {installments.map(value => (
-                                <MenuItem key={value} value={value}>
-                                  {value}
+                              {paymentMethodOptions.map(option => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
                                 </MenuItem>
                               ))}
                               </TextField>
@@ -261,42 +250,69 @@ function StudentEdit({ studentId }) {
                           )}
                         />
                     </Grid>
-                  )}
-                  
-                  <Grid item xs={12} md={12} container direction="row" justify="flex-end" spacing={2}>
-                    {!formikBag.isSubmitting ? (
-                      <React.Fragment>
-                        <Grid item xs={12}>
-                          <Button size={'large'} fullWidth={isXs} variant="contained" color="primary" type="submit">Guardar</Button>
+                    {formikBag.values.payment_method === PAYMENT_METHOD_CC_ID && (
+                      <Grid item md={12} xs={12}>
+                        <Field
+                            name="installments"
+                            render={({ field, form, meta }) => (
+                              <FormControl fullWidth>
+                                <TextField
+                                label={l.installments.label}
+                                value={field.value}
+                                select
+                                {...field}
+                                >
+                                {installments.map(value => (
+                                  <MenuItem key={value} value={value}>
+                                    {value}
+                                  </MenuItem>
+                                ))}
+                                </TextField>
+                                <FieldError>{meta.touched && meta.error && meta.error}</FieldError>
+                                </FormControl>
+                            )}
+                          />
+                      </Grid>
+                    )}
+                    
+
+                      {!formikBag.isSubmitting ? (
+                        <Grid xs={12} md={12} container direction="row" item justify="flex-end" spacing={isXs ? 0 : 3}>
+                          <Grid item md={3} xs={12}>
+                            <Button size={'large'} fullWidth={true} variant="contained" color="primary" type="submit">Guardar</Button>
+                          </Grid>
+                          <Grid item md={3} xs={12}>
+                            <Link href="/dashboard">
+                              <Button size={'large'} fullWidth={true} variant="contained" color="secondary" type="button">Cancelar</Button>
+                            </Link>
+                          </Grid>
                         </Grid>
-                        <Grid item  xs={12}>
-                          <Link href="/dashboard">
-                            <Button size={'large'} fullWidth={isXs} variant="contained" color="secondary" type="button">Cancelar</Button>
-                          </Link>
-                        </Grid>
-                      </React.Fragment>
-                    )
-                      : <Grid item><CircularProgress /></Grid>}  
-                  </Grid>
-                  
-                  </Grid>
-                  
-                </Form>
-              )}
-            />
-          
-        </MuiPickersUtilsProvider>
-        </Grid>
-          <style jsx>{`
-              h2{
-                  padding-top: 20px;
-                  padding-bottom: 20px;
-              }
-              .edit-container{
-                margin-bottom: 100px;
-              }
-          `}</style>
-      </Container>
+                      )
+                        : <Grid direction="row" container justify="flex-end">
+                            <Grid item >
+                              <CircularProgress />
+                            </Grid>
+                        </Grid>}  
+                    </Grid>
+                    
+                  </Form>
+                )}
+              />
+            
+          </MuiPickersUtilsProvider>
+          </Grid>
+        </Container>
+      </section>
+      <style jsx>{`
+                h2{
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                }
+                .edit-container{
+                  margin-bottom: 50px;
+                }
+            `}</style>
+    </React.Fragment>
   )
 }
 

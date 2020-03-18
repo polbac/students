@@ -24,7 +24,16 @@ export default function StudentsListFilter() {
     const options = useSelector(selectOptions)
 
     const dispatch = useDispatch()
-    const { list: { name, email, career, country } } = useLocale()
+    let { list: { name, email, career, country, seeAll } } = useLocale()
+
+    if (options.careers !== null) {
+        options.careers = [{ id: null, name: seeAll}, ...options.careers]
+    }
+
+    if (options.countries !== null) {
+        options.countries = [{ id: null, name: seeAll}, ...options.countries]
+    }
+    
     const initialValues = { ...filters }
 
     return (
