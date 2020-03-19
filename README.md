@@ -6,10 +6,12 @@ A nice tool to create students on a dashbaord
 
 ## Previews
 
-Form (Create new Student)
+### Form (Create new Student)
+
 ![Form](previews/form.png "Form")
 
-Dashboard (List & Edit Students)
+### Dashboard (List & Edit Students)
+
 ![Form](previews/dashboard.png "Form")
 
 ## Requeriments
@@ -84,7 +86,7 @@ now --prod
 
 ✅ Logout
 
-❌ JWT on other endpoints
+✅ JWT on other endpoints
 
 ❌ Storybook
 
