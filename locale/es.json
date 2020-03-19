@@ -61,7 +61,7 @@
         "title": "Ingresa tus datos",
         "email": {
             "label": "Correo electrónico",
-            "error": "Igresa un e-mail válido"
+            "error": "Ingresa un e-mail válido"
         },
         "password": {
             "label": "Contraseña",
