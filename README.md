@@ -73,6 +73,48 @@ now --prod
 
 https://app.diagrams.net/#G17qvNLYbBx8cw3e-m1sWTnsD1L4eBLZVK
 
+## Global Store (just for Dashboard)
+
+```
+{
+    session: {
+        token: null,
+        email: '',
+        authorized: false,
+        authError: false,
+        authServerError: false,
+        loading: false
+    },
+    list: {
+        students: [],
+        filters: {
+            name: '',
+            email: '',
+            career: null,
+            country: null
+        },
+        serverError: false
+    },
+    loader: {
+        loading: false,
+    },
+    mainError: {
+        error: ''
+    },
+    edit: {
+        student: [],
+        careers: [],
+        countries: [],
+        paymentMethodOptions: [],
+    },
+    options: {
+        careers: [],
+        countries: [],
+        paymentMethodOptions: [],
+    }
+}
+```
+
 ## TODO
 
 ✅ UI Filters
@@ -95,11 +137,11 @@ https://app.diagrams.net/#G17qvNLYbBx8cw3e-m1sWTnsD1L4eBLZVK
 
 ✅ Error Page
 
-✅Readme with database
+✅ Readme with database
+
+✅ Readme with store
 
 ❌ Get a new Database Service
-
-❌ Readme with state managment
 
 ❌ Storybook
 
