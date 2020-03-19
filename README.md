@@ -32,14 +32,14 @@ yarn run dev
 
 ```
 yarn run build
-yarn run build:production # for production
+yarn run build:dev # for development
 ```
 
 ## Start Application
 
 ```
 yarn run start
-yarn run start:production  # for production
+yarn run start:dev # for development
 ```
 
 ## Deploy
