@@ -82,6 +82,8 @@ now --prod
 
 ✅ Theme Context
 
+✅ Logout
+
 ❌ JWT on other endpoints
 
 ❌ Storybook

@@ -54,8 +54,7 @@ export default function StudentsListFilter() {
                         }}
                         render={formikBag => (
                             <Form>
-                                <Grid container  spacing={3}>
-                                    <Grid item spacing={0} xs="12" md="3">
+                                <Grid container  spacing={3} direction="row"alignItems="flex-end">                                    <Grid item spacing={0} xs="12" md="3">
                                         <Field
                                         name="name"
                                         render={({ field, form, meta }) => (

@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { getConnection } from '../connection'
+import { createResponse, createNonAuthorizedResponse } from '../utils/httpBuilderResponse';
 
 var md5 = require('md5');
 
-const secret = 'acamica'
+const secret = 'acamica 🎓'
 
 export function valid(token: string) {
     return new Promise((resolve, reject) => {
@@ -47,5 +48,19 @@ function getExpiredDate() {
 }
 
 export function createJWT(payload: any) {
-    return jwt.sign(payload, 'acamica 🎓');
+    return jwt.sign(payload, secret);
+}
+
+export function protectRequest(request: any, response: any) {
+    const { authorization } = request.headers
+    try {
+        const ver = jwt.verify(authorization, secret)
+        console.log('ver', ver)
+    } catch(err) {
+        console.log('createNonAuthorizedResponse')
+        createNonAuthorizedResponse(response)
+    }
+    
+    
+
 }

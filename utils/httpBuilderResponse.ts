@@ -23,3 +23,11 @@ export function createResponse(res: any, body = {}) {
             body,
         })
 }
+
+export function createNonAuthorizedResponse(res: any, body = {}) {
+    res.status(HttpStatus.NOT_AUTHORIZED)
+        .send({
+            success: false,
+            text: 'no authorized',
+        })
+}

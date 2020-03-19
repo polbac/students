@@ -2,7 +2,6 @@ import { createResponse, createErrorResponse } from "../../../utils/httpBuilderR
 import { getConnection } from '../../../connection'
 import { HttpMethod } from "../../../models/http"
 
-
 export default async (req: any, res: any) => {
     const { method } = req
 

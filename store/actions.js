@@ -1,5 +1,6 @@
 import Router from 'next/router'
 import apiClient from '../lib/client'
+import { HttpStatus } from '../models/http'
 
 export const SHOW_MAIN_ERROR = "SHOW_MAIN_ERROR"
 
@@ -39,8 +40,8 @@ export const authorize = (email, password) => dispatch => {
 
             if (session.success) {
                 const { body: { session: { email, token } } } = session
-                dispatch(setSession(email, token))
                 dispatch(saveSession(email, token))
+                
                 return
             }
 
@@ -48,6 +49,7 @@ export const authorize = (email, password) => dispatch => {
             
         })
         .catch(err => {
+            console.log('authorize', err)
             dispatch(authUnsetLoading())
             dispatch(authServerError())
         })
@@ -87,6 +89,11 @@ export const fetchStudentEdit = id => (dispatch, getState) => {
         .get(`student/${id}`)
         .then(async res => {
             dispatch(hideMainLoader())
+            
+            if (res.status === HttpStatus.NOT_AUTHORIZED) {
+                return dispatch(unsetSession())
+            }
+
             const studentResponse = await res.json()
             const { body: { student, countries, careers, paymentMethodOptions }} = studentResponse
             dispatch(setStudentEdit(student, countries, careers, paymentMethodOptions))
@@ -106,11 +113,17 @@ export const fetchList = () => (dispatch, getState) => {
     }
     
     const { list: { filters }} = getState()
+
     apiClient
         .get('student', filters, true)
         .then(async res => {
             dispatch(hideMainLoader())
             const studentsJson = await res.json()
+            console.log(res.status)
+            if (res.status === HttpStatus.NOT_AUTHORIZED) {
+                return dispatch(unsetSession())
+            }
+
             const { body: { students } } = studentsJson
             dispatch(setList(students))
         })
@@ -139,9 +152,11 @@ export const unsetStudentEdit = () => ({
 })
 
 
-export const saveSession = (email, token) => {
+export const saveSession = (email, token) => dispatch => {
     localStorage.setItem('email', email)
     localStorage.setItem('token', token)
+    setTimeout(() => dispatch(setSession(email, token)))
+    
 }
 
 

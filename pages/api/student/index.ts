@@ -2,11 +2,13 @@ import { Like } from 'typeorm'
 import { createResponse, createErrorResponse } from "../../../utils/httpBuilderResponse"
 import { getConnection } from '../../../connection'
 import { HttpMethod } from "../../../models/http"
-
+import { protectRequest } from '../../../service/auth'
 
 export default async (req: any, res: any) => {
 
     const { method, query: { name, email, career, country } } = req
+
+    protectRequest(req, res)
 
     if (method === HttpMethod.GET) {
         try {        
