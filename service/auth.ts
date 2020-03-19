@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { getConnection } from '../connection'
-import { createResponse, createNonAuthorizedResponse } from '../utils/httpBuilderResponse';
+import { createNonAuthorizedResponse } from '../utils/httpBuilderResponse';
 
 var md5 = require('md5');
 
