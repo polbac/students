@@ -67,6 +67,11 @@ now --prod
 - material-ui
 - yup
 
+## Database
+
+![Database](previews/database.png "Database")
+
+https://app.diagrams.net/#G17qvNLYbBx8cw3e-m1sWTnsD1L4eBLZVK
 
 ## TODO
 
@@ -88,8 +93,15 @@ now --prod
 
 ✅ JWT on other endpoints
 
+✅ Error Page
+
+✅Readme with database
+
+❌ Get a new Database Service
+
+❌ Readme with state managment
+
 ❌ Storybook
 
 ❌ Docker
 
-❌ Get a new Database Service
