@@ -1,5 +1,60 @@
 # students
 
+## Intro
+
+A nice tool to create students on a dashbaord
+
+## Previews
+
+Form (Create new Student)
+![Form](previews/form.png "Form")
+
+Dashboard (List & Edit Students)
+![Form](previews/dashboard.png "Form")
+
+## Requeriments
+
+- node > 10
+- yarn
+
+## Install
+
+```
+yarn install
+```
+
+## Dev
+
+```
+yarn run dev
+```
+## Build
+
+```
+yarn run build
+yarn run build:production # for production
+```
+
+## Start Application
+
+```
+yarn run start
+yarn run start:production  # for production
+```
+
+## Deploy
+
+```
+now
+```
+
+and next
+
+```
+now --prod
+```
+
+
 ## Stack
 
 - nextjs
@@ -9,13 +64,6 @@
 - material-ui
 - yup
 
-## Previews
-
-Form (Create new Student)
-![Form](previews/form.png "Form")
-
-Dashboard (List & Edit Students)
-![Form](previews/dashboard.png "Form")
 
 ## TODO
 
