@@ -80,11 +80,11 @@ now --prod
 
 ✅ Edit / List Server Errors
 
+✅ Theme Context
+
 ❌ JWT on other endpoints
 
 ❌ Storybook
-
-❌ Theme Context
 
 ❌ Docker
 
