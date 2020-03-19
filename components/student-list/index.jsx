@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import Link from 'next/link'
 import useLocale from '../../hooks/locale'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FetchError from '../fetch-error'
 import { fetchList } from '../../store/actions'
@@ -20,6 +20,7 @@ import { selectList } from '../../selectors/students'
 import { isLoading } from '../../selectors/loader'
 import { selectMainError } from '../../selectors/error'
 import StudentsListFilter from './filter'
+import {ThemeContext } from '../../context/theme'
 
 function StudentList({ children }) {
     const { list } = useLocale()
@@ -28,6 +29,7 @@ function StudentList({ children }) {
     const loading = useSelector(isLoading)
     const mainError = useSelector(selectMainError)
     const [mainLoader, setMainLoader] = useState(true)
+    const { texts } = useContext(ThemeContext)
     
     useEffect(() => {
         dispatch(fetchList())
@@ -48,7 +50,7 @@ function StudentList({ children }) {
     return (
         <Container maxWidth="md" className='container'>
             <Grid md="12">
-            <h2>{list.title}</h2>
+            <h2 style={{ fontSize: texts.sizeTitle2}}>{list.title}</h2>
             </Grid>
             <Grid>
                 <StudentsListFilter />
@@ -80,7 +82,7 @@ function StudentList({ children }) {
                                         <Button
                                             size="small"
                                             variant="contained"
-                                            color="secondary"
+                                            color="primary"
                                             startIcon={<EditIcon />}
                                         >
                                         <a>{list.edit}</a>

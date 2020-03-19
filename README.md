@@ -59,6 +59,7 @@ now --prod
 
 - nextjs
 - react
+- formik
 - redux & redux-thunk (only for dashboard)
 - typeorm
 - material-ui

@@ -1,6 +1,7 @@
 import React from 'react'
 import App from 'next/app'
 import Head from 'next/head'
+import ThemeProvider from '../context/theme'
 
 class MyApp extends App {
   
@@ -11,7 +12,9 @@ class MyApp extends App {
           <Head>
           <link href="https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap" rel="stylesheet" />
           </Head>
-          <Component {...pageProps} />
+          <ThemeProvider>
+            <Component {...pageProps} />
+          </ThemeProvider>
           <style global jsx>{`
             html,body{
                 font-family: 'Rubik', helvetica, arial, sans-serif;

@@ -6,8 +6,7 @@ import {
   Field,
 } from 'formik'
 import useLocale from '../../hooks/locale'
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
@@ -27,6 +26,7 @@ import { selectEdit } from '../../selectors/students'
 import { selectOptions } from '../../selectors/options'
 import { selectMainError } from '../../selectors/error'
 import FetchError from '../fetch-error'
+import {ThemeContext } from '../../context/theme'
 
 const PAYMENT_METHOD_CC_ID = 1
 
@@ -39,6 +39,7 @@ function StudentEdit({ studentId }) {
   const { edit, paymentMethodForm: { form } } = useLocale()
   const { paymentMethodForm } = useLocale()
   const serverError = false
+  const { texts } = useContext(ThemeContext)
 
   useEffect(() => {
       dispatch(fetchStudentEdit(studentId))
@@ -76,7 +77,7 @@ function StudentEdit({ studentId }) {
       <section className="edit-container">
         <Container maxWidth="md" >
             <Grid md="12">
-            <h2>{edit.title}</h2>
+            <h2 style={{ fontSize: texts.sizeTitle2}}>{edit.title}</h2>
             </Grid>
             <Grid md="12">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
